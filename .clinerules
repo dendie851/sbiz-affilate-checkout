@@ -1,0 +1,29 @@
+# ATURAN UTAMA PEMBUATAN MODUL BARU
+
+Setiap kali pengguna meminta untuk membuat fitur, modul, atau komponen baru, kamu WAJIB mematuhi instruksi berikut sebelum menulis kode:
+
+## 1. Wajib Membaca Pola Referensi (Pattern Matching)
+- SEBELUM melakukan generate kode, kamu harus membaca, memindai, dan menganalisis modul referensi standar yang berada di folder: `app/assetCategory`.
+- Pelajari seluruh file di dalam folder tersebut (struktur direktori, pemisahan file MVC/arsitektur, dan relasi antar file).
+
+## 2. Standar Struktur & Penulisan Kode
+- Gunakan arsitektur dan pola desain yang SAMA PERSIS dengan modul `assetCategory`.
+- Tiru gaya penulisan fungsi, pendekatan pembuatan class/controller/model, dan cara memvalidasi input yang ada di sana.
+- Dilarang keras memperkenalkan pola baru, struktur folder baru, atau library pihak ketiga baru kecuali diminta secara eksplisit oleh pengguna.
+
+## 3. Penanganan Error (Error Handling) & Return Value
+- Perhatikan bagaimana modul `assetCategory` menangkap error dan mengembalikan respons (misalnya format JSON API atau return view).
+- Modul baru wajib menggunakan mekanisme penanganan error dan format balikan (response format) yang identik.
+
+## 4. Konvensi Penamaan (Naming Conventions)
+- Patuhi format penamaan file dari referensi `assetCategory` (misal: penggunaan camelCase, PascalCase, atau snake_case pada nama file).
+- Gunakan standar penamaan variabel, konstanta, fungsi, dan nama class yang konsisten dengan modul referensi tersebut.
+
+## 5. Prosedur Pengerjaan
+- Jangan langsung membuat seluruh file beserta logikanya dalam satu kali *generate*.
+- Buat file kerangka (skeleton/boilerplate) terlebih dahulu sesuai dengan pola file yang ada di `app/assetCategory`, pastikan strukturnya disetujui, lalu lanjutkan mengisi logika bisnisnya.
+
+# EXECUTION & TOKEN SAVING RULES
+- DO NOT run any unit tests, automated tests, or terminal execution commands (like phpunit, composer test, npm run test) after writing code unless explicitly asked.
+- After creating or modifying files, STOP immediately and wait for user review. 
+- Do not attempt to self-correct by running the app in the terminal. The user will manually review the code to save API tokens.

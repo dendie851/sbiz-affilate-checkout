@@ -1,0 +1,21 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+Options -indexes
+Header append X-FRAME-OPTIONS "SAMEORIGIN"
+
+ServerSignature Off
+
+ErrorDocument 403 http://hr.mahira.co.id
+ErrorDocument 404 http://hr.mahira.co.id
+ErrorDocument 500 http://hr.mahira.co.id
+ErrorDocument 501 http://hr.mahira.co.id
+ErrorDocument 502 http://hr.mahira.co.id
+ErrorDocument 503 http://hr.mahira.co.id
+
+
+
+
+
