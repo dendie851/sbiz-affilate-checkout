@@ -38,9 +38,8 @@
 
 	$showPriceNow       = $hasProduct ? $dataProduct['price'] : '';
 	$showDescription    = $hasProduct ? $dataProduct['description'] : '';
-	$showDescription    = $hasProduct ? $dataProduct['link_product_brosur'] : '';
+	$showLinkProductBrosur  = $hasProduct ? $dataProduct['link_product_brosur'] : '';
 
-	link_product_brosur
 
 	$showImage = $config['app']['assets'].'img/no-photo.png';
 
