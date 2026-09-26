@@ -21,6 +21,33 @@
 			$globalViewScroolGroupMenu = 'grupMenuDashboard';												
 			include_once 'app/home/index.php';
 		break;		
+	case (globalFunctionUri(2) == 'checkout/postalLookup'):
+			include_once 'app/checkout/postalLookup.php';
+	break;
+	case (globalFunctionUri(2) == 'checkout/order'):
+			language::set($config['app']['language']);
+			$globalModulActive = 'checkout';
+			$globalViewScroolGroupMenu = 'grupCheckout';
+			include_once 'app/checkout/order.php';
+	break;
+	case (globalFunctionUri(2) == 'checkout/orderSave'):
+			language::set($config['app']['language']);
+			$globalModulActive = 'checkout';
+			$globalViewScroolGroupMenu = 'grupCheckout';
+			include_once 'app/checkout/orderSave.php';
+	break;
+	case (globalFunctionUri(2) == 'checkout/confirmation'):
+			language::set($config['app']['language']);
+			$globalModulActive = 'checkout';
+			$globalViewScroolGroupMenu = 'grupCheckout';
+			include_once 'app/checkout/confirmation.php';
+	break;
+	case (globalFunctionUri(2) == 'checkout/tracking'):
+			language::set($config['app']['language']);
+			$globalModulActive = 'checkout';
+			$globalViewScroolGroupMenu = 'grupCheckout';
+			include_once 'app/checkout/tracking.php';
+	break;
 	default:
 			$globalModulActive = 'checkout';
 			$globalViewScroolGroupMenu = 'grupCheckout';												

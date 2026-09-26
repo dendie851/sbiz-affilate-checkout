@@ -23,6 +23,10 @@ Setiap kali pengguna meminta untuk membuat fitur, modul, atau komponen baru, kam
 - Jangan langsung membuat seluruh file beserta logikanya dalam satu kali *generate*.
 - Buat file kerangka (skeleton/boilerplate) terlebih dahulu sesuai dengan pola file yang ada di `app/assetCategory`, pastikan strukturnya disetujui, lalu lanjutkan mengisi logika bisnisnya.
 
+## 6. Aturan Desain & UI/UX (Sangat Penting)
+- Perhatian dalam pembuatan frontend UI/UX jadikan selaras dengan module app\checkout
+ - **Mobile-First & Mobile Friendly:** Karena pengguna akan membukanya melalui *browser* di perangkat *mobile* (smartphone), pastikan seluruh tata letak (layout),  tombol, *form*, dan ukuran teks sangat responsif, nyaman disentuh (*touch-friendly*), dan tidak ada elemen yang terpotong.
+ - 
 # EXECUTION & TOKEN SAVING RULES
 - DO NOT run any unit tests, automated tests, or terminal execution commands (like phpunit, composer test, npm run test) after writing code unless explicitly asked.
 - After creating or modifying files, STOP immediately and wait for user review. 
