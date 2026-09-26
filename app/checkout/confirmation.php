@@ -71,6 +71,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Card Rekening Tujuan Transfer -->
             <div class="ac-card">
                 <div class="ac-card-body">
@@ -124,19 +125,10 @@
                         <ol class="ac-steps">
                             <li>Lakukan transfer sesuai nominal tagihan <b>Rp <?php echo number_format((double)$dataOrder['amount_sale'], 0, ',', '.'); ?></b>.</li>
                             <li>Simpan atau <i>screenshot</i> bukti struk pembayaran / mutasi m-banking Anda.</li>
-                            <li>Klik tombol <b>"Konfirmasi via WhatsApp"</b> di bawah ini.</li>
+                            <li>Pilih salah satu nomor CS WhatsApp dan klik tombol <b>"Hubungi"</b> di bagian bawah.</li>
                             <li>Kirim pesan otomatis yang sudah disiapkan beserta lampiran foto bukti transfer.</li>
                             <li>Admin kami akan memvalidasi pesanan dan mengubah status menjadi diproses/dikirim.</li>
                         </ol>
-
-                        <?php if(!empty($waTargetNumber)): ?>
-                            <div class="mt-3">
-                                <a href="<?php echo $waUrl; ?>" target="_blank" rel="noopener noreferrer" class="ac-btn ac-btn-success" style="display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;">
-                                    <i class="fa fa-whatsapp" style="font-size: 18px;"></i>
-                                    <span>Konfirmasi via WhatsApp Sekarang</span>
-                                </a>
-                            </div>
-                        <?php endif; ?>
                     </div>
 
                     <div class="ac-accordion-header" onclick="toggleAccordion(this)">
@@ -225,17 +217,33 @@
                 </div>
             </div>
 
-            <!-- Tombol Navigasi Menuju Tracking Pesanan -->
+            <!-- Card Salin Tautan / Link Halaman & Navigasi Tracking -->
             <div class="ac-card">
-                <div class="ac-card-body text-center" style="padding: 16px;">
-                    <div style="font-size: 13px; color: #6c757d; margin-bottom: 12px;">
-                        Ingin memeriksa progres pengiriman barang pesanan Anda?
+                <div class="ac-card-body" style="padding: 16px;">
+                    <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 8px;">
+                        <i class="fa fa-share-alt text-primary mr-1"></i> Bagikan atau Simpan Halaman Ini
                     </div>
-                    <a href="<?php echo $urlTracking; ?>" class="ac-btn ac-btn-outline" style="display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; width: 100%;">
-                        <i class="fa fa-truck text-primary"></i>
-                        <span>Lihat Status & Lacak Pesanan</span>
-                        <i class="fa fa-chevron-right" style="font-size: 11px; margin-left: auto;"></i>
-                    </a>
+                    <div style="font-size: 12px; color: #6c757d; margin-bottom: 12px;">
+                        Salin tautan halaman konfirmasi ini untuk memudahkan Anda mengaksesnya kembali nanti.
+                    </div>
+                    
+                    <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 14px;">
+                        <input type="text" id="pageShareUrl" readonly value="<?php echo htmlspecialchars((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"); ?>" class="form-control" style="font-size: 12px; background: #f8f9fa; color: #495057; border: 1px solid #ced4da; border-radius: 4px; padding: 6px 10px; height: auto; flex-grow: 1;" />
+                        <button type="button" class="ac-copy-btn" onclick="copyText(document.getElementById('pageShareUrl').value, this)" style="white-space: nowrap; padding: 7px 12px; background: #e7f1ff; color: #0d47a1; border: 1px solid #b6d4fe; border-radius: 4px; font-weight: 600; font-size: 12px; cursor: pointer; transition: all 0.2s;">
+                            <i class="fa fa-link"></i> Salin Link
+                        </button>
+                    </div>
+
+                    <div style="border-top: 1px solid #eee; padding-top: 12px; margin-top: 4px;">
+                        <div style="font-size: 13px; color: #6c757d; margin-bottom: 8px;">
+                            Ingin memeriksa progres pengiriman barang pesanan Anda?
+                        </div>
+                        <a href="<?php echo $urlTracking; ?>" class="ac-btn ac-btn-outline" style="display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; width: 100%;">
+                            <i class="fa fa-truck text-primary"></i>
+                            <span>Lihat Status & Lacak Pesanan</span>
+                            <i class="fa fa-chevron-right" style="font-size: 11px; margin-left: auto;"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -245,23 +253,43 @@
         <div class="ac-bottom-bar">
             <div class="ac-bottom-bar-inner">
                 <div class="ac-bottom-total">
-                    <div class="ac-bottom-total-label">Total Tagihan</div>
-                    <div class="ac-bottom-total-value">Rp <?php echo number_format((double)$dataOrder['amount_sale'], 0, ',', '.'); ?></div>
+                    <div class="ac-bottom-total-label">No. Order</div>
+                    <div class="ac-bottom-total-value" style="font-size: 15px;">#<?php echo htmlspecialchars($dataOrder['no_order']); ?></div>
                 </div>
                 <div class="ac-bottom-action">
-                    <?php if(!empty($waTargetNumber)): ?>
-                        <a href="<?php echo $waUrl; ?>" target="_blank" rel="noopener noreferrer" class="ac-btn ac-btn-success" style="text-decoration: none;">
-                            <i class="fa fa-whatsapp"></i> &nbsp;Konfirmasi
+                    <!-- Bungkus select dan tombol agar sejajar rapi mengikuti style ac-bottom-action -->
+                    <div style="display: flex; gap: 6px; align-items: center;">
+                        <select id="waSelectTarget" class="ac-btn" style="width: 220px; background: #fff; color: #333; border: 1px solid #ddd; cursor: pointer; padding: 6px 10px; font-size: 14px; height: auto;">
+                            <option value="" disabled selected>-- Pilih CS WA --</option>
+                            <?php foreach($waUrl as $index => $url): ?>
+                                <option value="<?php echo $url; ?>">CS WA <?php echo $index + 1; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
+                        <a href="#" id="btnWaKonfirmasi" target="_blank" rel="noopener noreferrer" class="ac-btn ac-btn-success" style="text-decoration: none; pointer-events: none; opacity: 0.5;">
+                            <i class="fa fa-phone"></i> &nbsp;Hubungi
                         </a>
-                    <?php else: ?>
-                        <a href="<?php echo $urlTracking; ?>" class="ac-btn ac-btn-primary" style="text-decoration: none;">
-                            <i class="fa fa-truck"></i> &nbsp;Lacak Pesanan
-                        </a>
-                    <?php endif; ?>
+                    </div>
+
+                    <!-- Script untuk mengaktifkan tombol Hubungi sesuai pilihan dropdown -->
+                    <script>
+                        document.getElementById('waSelectTarget').addEventListener('change', function() {
+                            var selectedUrl = this.value;
+                            var btn = document.getElementById('btnWaKonfirmasi');
+                            if(selectedUrl) {
+                                btn.href = selectedUrl;
+                                btn.style.pointerEvents = 'auto';
+                                btn.style.opacity = '1';
+                            } else {
+                                btn.href = '#';
+                                btn.style.pointerEvents = 'none';
+                                btn.style.opacity = '0.5';
+                            }
+                        });
+                    </script>
                 </div>
             </div>
         </div>
-
     <?php endif; ?>
 
 <?php $globalPageTitle = ($hasOrder ? 'Konfirmasi Pesanan #' . $dataOrder['no_order'] . ' - ' : 'Konfirmasi Pembayaran - ') . ($companyName ? $companyName : 'SBiZ Affiliate'); ?>
@@ -330,4 +358,3 @@
 <?php ob_end_clean(); ?>
 
 <?php include_once 'app/template/public.php' ?>
-

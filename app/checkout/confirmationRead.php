@@ -121,6 +121,7 @@
 		$waTargetNumber = formatWhatsAppNumber($dataOrder['affiliate_phone']);
 	}
 
+
 	$waMessage = '';
 	if($hasOrder) {
 		$orderCode = $dataOrder['no_order'];
@@ -133,7 +134,20 @@
 				   . "• Total: *" . $totalFormatted . "*\n\n"
 				   . "Berikut saya lampirkan bukti transfer. Mohon diproses ya. Terima kasih!";
 	}
-	$waUrl = 'https://api.whatsapp.com/send?phone=' . $waTargetNumber . '&text=' . rawurlencode($waMessage);
+
+
+	// Ambil daftar rekening bank aktif untuk tujuan transfer
+	$queryBank = "select id, name, phone
+					from member
+					where is_enabled = '1'
+					  and position_id = '4'
+					order by name asc";
+	$tmpSupervisor = $globalConDBMySQL->query($queryBank) or die (mysqli_error($globalConDBMySQL));
+	while($b = $tmpSupervisor->fetch_assoc()) {
+		$waTargetNumber = $b['phone'];
+		$waUrl[$waTargetNumber] = 'https://api.whatsapp.com/send?phone=' . $waTargetNumber . '&text=' . rawurlencode($waMessage);
+	}
+
 
 	$urlTracking = $globalUrl . 'checkout/tracking?noOrder=' . (isset($dataOrder['no_order']) ? $dataOrder['no_order'] : '');
 ?>

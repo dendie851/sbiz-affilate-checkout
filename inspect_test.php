@@ -1,0 +1,1 @@
+<?php require 'sbiz/lib/connection.php';  = ->query('DESCRIBE member'); if(){ while(=->fetch_assoc()){ echo ['Field'].' '; } } else { echo 'ERR: '.->error; } echo PHP_EOL;  = ->query('SELECT * FROM member WHERE position_id = 1'); if(){ while(=->fetch_assoc()){ print_r(); } } ?>  

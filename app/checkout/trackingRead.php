@@ -103,16 +103,37 @@
 		return $clean;
 	}
 
+	$waMessage = '';
+	if($hasOrder) {
+		$orderCode = $dataOrder['no_order'];
+		$custName = $dataOrder['name'];
+		$totalFormatted = 'Rp ' . number_format((double)$dataOrder['amount_sale'], 0, ',', '.');
+		$waMessage = "Halo Admin " . ($companyName ? $companyName : 'SBiZ') . ",\n\n"
+				   . "Saya mau konfirmasi pembayaran pesanan affiliate:\n"
+				   . "• No Order: *" . $orderCode . "*\n"
+				   . "• Nama: *" . $custName . "*\n"
+				   . "• Total: *" . $totalFormatted . "*\n\n"
+				   . "Berikut saya lampirkan bukti transfer. Mohon diproses ya. Terima kasih!";
+	}
+
+	
 	$targetWA = strlen($companyWhatsapp) > 0 ? trackingFormatWA($companyWhatsapp) : '';
 	if(empty($targetWA) && isset($dataOrder['affiliate_phone']) && strlen($dataOrder['affiliate_phone']) > 0) {
 		$targetWA = trackingFormatWA($dataOrder['affiliate_phone']);
 	}
 
-	$csWaUrl = '';
-	if(!empty($targetWA) && $hasOrder) {
-		$msg = "Halo Admin " . ($companyName ? $companyName : 'SBiZ') . ", saya ingin menanyakan status pesanan saya dengan No. Order *" . $dataOrder['no_order'] . "*.";
-		$csWaUrl = 'https://api.whatsapp.com/send?phone=' . $targetWA . '&text=' . rawurlencode($msg);
+	// Ambil daftar rekening bank aktif untuk tujuan transfer
+	$queryBank = "select id, name, phone
+					from member
+					where is_enabled = '1'
+					  and position_id = '4'
+					order by name asc";
+	$tmpSupervisor = $globalConDBMySQL->query($queryBank) or die (mysqli_error($globalConDBMySQL));
+	while($b = $tmpSupervisor->fetch_assoc()) {
+		$waTargetNumber = $b['phone'];
+		$waUrl[$waTargetNumber] = 'https://api.whatsapp.com/send?phone=' . $waTargetNumber . '&text=' . rawurlencode($waMessage);
 	}
+
 
 	$urlConfirmation = $globalUrl . 'checkout/confirmation?noOrder=' . (isset($dataOrder['no_order']) ? $dataOrder['no_order'] : '');
 ?>

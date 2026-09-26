@@ -83,6 +83,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Card Progress Milestones -->
             <div class="ac-card">
                 <div class="ac-card-body">
@@ -98,19 +99,19 @@
                         <!-- Step 2: Diproses / Dikemas -->
                         <div class="ac-milestone-item <?php echo $stepIndex >= 1 ? ($stepIndex == 1 ? 'current' : 'completed') : ''; ?>">
                             <div class="ac-milestone-dot"><i class="fa <?php echo $stepIndex > 1 ? 'fa-check' : 'fa-box'; ?>"></i></div>
-                            <div class="ac-milestone-title">Diproses</div>
+                            <div class="ac-milestone-title">Proses Pengemasan</div>
                         </div>
 
-                        <!-- Step 3: Dikirim -->
+                        <!-- Step 3: Proses untuk Dikirim -->
                         <div class="ac-milestone-item <?php echo $stepIndex >= 2 ? ($stepIndex == 2 ? 'current' : 'completed') : ''; ?>">
                             <div class="ac-milestone-dot"><i class="fa <?php echo $stepIndex > 2 ? 'fa-check' : 'fa-truck'; ?>"></i></div>
-                            <div class="ac-milestone-title">Dikirim</div>
+                            <div class="ac-milestone-title">Proses Pengiriman</div>
                         </div>
 
-                        <!-- Step 4: Selesai -->
+                        <!-- Step 4: Sudah dikirim ke ekspedisi -->
                         <div class="ac-milestone-item <?php echo $stepIndex >= 3 ? 'completed' : ''; ?>">
                             <div class="ac-milestone-dot"><i class="fa fa-check-circle"></i></div>
-                            <div class="ac-milestone-title">Selesai</div>
+                            <div class="ac-milestone-title">Paket di Ekspedisi</div>
                         </div>
                     </div>
                 </div>
@@ -159,20 +160,23 @@
                     <ul class="ac-timeline">
                         <?php if($st == '3'): ?>
                             <li class="is-active">
-                                <div class="ac-tl-title">Pesanan Selesai</div>
-                                <div class="ac-tl-desc">Pesanan telah berhasil diterima oleh pembeli. Terima kasih telah berbelanja!</div>
-                            </li>
-                        <?php endif; ?>
-
-                        <?php if($st == '2' || $st == '3'): ?>
-                            <li class="<?php echo $st == '2' ? 'is-active' : ''; ?>">
-                                <div class="ac-tl-title">Paket Dalam Perjalanan</div>
+                                <div class="ac-tl-title">Pesanan Dalam Pengiriman</div>
+                                <div class="ac-tl-desc">Paket Sudah diserahkan ke Ekspedisi</div>
                                 <div class="ac-tl-desc">
                                     Paket telah diserahkan ke pihak kurir ekspedisi<?php echo !empty($dataOrder['expedition_name']) ? ' (' . htmlspecialchars($dataOrder['expedition_name']) . ')' : ''; ?>.
                                 </div>
                                 <?php if(!empty($dataOrder['date_shipping'])): ?>
                                     <div class="ac-tl-time"><i class="fa fa-clock-o"></i> <?php echo htmlspecialchars($dataOrder['date_shipping']); ?></div>
                                 <?php endif; ?>
+                            </li>
+                        <?php endif; ?>
+
+                        <?php if($st == '2' || $st == '3'): ?>
+                            <li class="<?php echo $st == '2' ? 'is-active' : ''; ?>">
+                                <div class="ac-tl-title">Proses Pengiriman</div>
+                                <div class="ac-tl-desc">
+                                    Paket disiapkan untuk diberikan ke ekspedisi
+                                </div>
                             </li>
                         <?php endif; ?>
 
@@ -271,19 +275,24 @@
                 </div>
             </div>
 
-            <!-- Card Bantuan / Pertanyaan -->
-            <?php if(!empty($csWaUrl)): ?>
-                <div class="ac-card">
-                    <div class="ac-card-body text-center" style="padding: 18px 16px;">
-                        <div style="font-size: 13.5px; font-weight: 600; color: #212529; margin-bottom: 4px;">Butuh bantuan dengan pesanan Anda?</div>
-                        <div style="font-size: 12.5px; color: #6c757d; margin-bottom: 12px;">Tim kami siap membantu Anda melalui layanan WhatsApp.</div>
-                        <a href="<?php echo $csWaUrl; ?>" target="_blank" rel="noopener noreferrer" class="ac-btn ac-btn-success" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; width: 100%;">
-                            <i class="fa fa-whatsapp" style="font-size: 18px;"></i>
-                            <span>Hubungi Bantuan CS</span>
-                        </a>
+            <!-- Card Salin Tautan / Link Halaman Tracking -->
+            <div class="ac-card">
+                <div class="ac-card-body" style="padding: 16px;">
+                    <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 8px;">
+                        <i class="fa fa-share-alt text-primary mr-1"></i> Bagikan atau Simpan Halaman Lacak Ini
+                    </div>
+                    <div style="font-size: 11px; color: #6c757d; margin-bottom: 12px;">
+                        Salin tautan halaman ini untuk memantau status pesanan kapan saja tanpa harus memasukkan nomor order ulang.
+                    </div>
+                    
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="text" id="pageShareUrl" readonly value="<?php echo htmlspecialchars((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"); ?>" class="form-control" style="font-size: 12px; background: #f8f9fa; color: #495057; border: 1px solid #ced4da; border-radius: 4px; padding: 6px 10px; height: auto; flex-grow: 1;" />
+                        <button type="button" class="ac-copy-btn" onclick="copyTrackingText(document.getElementById('pageShareUrl').value, this)" style="white-space: nowrap; padding: 7px 12px; background: #e7f1ff; color: #0d47a1; border: 1px solid #b6d4fe; border-radius: 4px; font-weight: 600; font-size: 12px; cursor: pointer; transition: all 0.2s;">
+                            <i class="fa fa-link"></i> Salin Link
+                        </button>
                     </div>
                 </div>
-            <?php endif; ?>
+            </div>
 
         </div>
 
@@ -299,10 +308,36 @@
                         <a href="<?php echo $urlConfirmation; ?>" class="ac-btn ac-btn-warning" style="text-decoration: none;">
                             <i class="fa fa-credit-card"></i> &nbsp;Bayar Sekarang
                         </a>
-                    <?php elseif(!empty($csWaUrl)): ?>
-                        <a href="<?php echo $csWaUrl; ?>" target="_blank" rel="noopener noreferrer" class="ac-btn ac-btn-success" style="text-decoration: none;">
-                            <i class="fa fa-whatsapp"></i> &nbsp;Hubungi CS
-                        </a>
+                    <?php elseif(!empty($waUrl) && is_array($waUrl)): ?>
+                        <div style="display: flex; gap: 6px; align-items: center;">
+                            <select id="waSelectTarget" class="ac-btn" style="width: 220px; background: #fff; color: #333; border: 1px solid #ddd; cursor: pointer; padding: 6px 10px; font-size: 14px; height: auto;">
+                                <option value="" disabled selected>-- Pilih CS WA --</option>
+                                <?php foreach($waUrl as $index => $url): ?>
+                                    <option value="<?php echo $url; ?>">CS WA <?php echo $index + 1; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+
+                            <a href="#" id="btnWaKonfirmasi" target="_blank" rel="noopener noreferrer" class="ac-btn ac-btn-success" style="text-decoration: none; pointer-events: none; opacity: 0.5;">
+                                <i class="fa fa-phone"></i> &nbsp;Hubungi
+                            </a>
+                        </div>
+
+                        <!-- Script untuk mengaktifkan tombol Hubungi sesuai pilihan dropdown -->
+                        <script>
+                            document.getElementById('waSelectTarget').addEventListener('change', function() {
+                                var selectedUrl = this.value;
+                                var btn = document.getElementById('btnWaKonfirmasi');
+                                if(selectedUrl) {
+                                    btn.href = selectedUrl;
+                                    btn.style.pointerEvents = 'auto';
+                                    btn.style.opacity = '1';
+                                } else {
+                                    btn.href = '#';
+                                    btn.style.pointerEvents = 'none';
+                                    btn.style.opacity = '0.5';
+                                }
+                            });
+                        </script>
                     <?php else: ?>
                         <a href="javascript:location.reload()" class="ac-btn ac-btn-outline" style="text-decoration: none;">
                             <i class="fa fa-refresh"></i> &nbsp;Segarkan
@@ -368,4 +403,3 @@
 <?php ob_end_clean(); ?>
 
 <?php include_once 'app/template/public.php' ?>
-
