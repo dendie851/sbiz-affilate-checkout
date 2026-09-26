@@ -172,6 +172,8 @@
         .ac-badge-success { background: #e6f4ea; color: #1e7e34; }
         .ac-badge-danger  { background: #fdecea; color: #c62828; }
         .ac-badge-info    { background: #e7f1ff; color: #0d47a1; }
+        .ac-badge-warning { background: #fff8e1; color: #f57c00; }
+        .ac-badge-secondary { background: #f1f3f4; color: #5f6368; }
 
         .ac-info-row {
             display: flex;
@@ -461,10 +463,17 @@
         }
         .ac-timeline li.is-done::before { background: #1e7e34; }
         .ac-timeline li.is-current::before { background: #0d47a1; }
+        .ac-timeline li.is-canceled::before { background: #c62828; }
         .ac-timeline .ac-timeline-title {
             font-size: 13px;
             font-weight: 600;
             color: #212529;
+            line-height: 1.4;
+        }
+        .ac-timeline .ac-timeline-desc {
+            font-size: 12px;
+            color: #616161;
+            margin-top: 3px;
             line-height: 1.4;
         }
         .ac-timeline .ac-timeline-date {
@@ -473,6 +482,158 @@
             margin-top: 2px;
         }
         .ac-timeline li.is-pending .ac-timeline-title { color: #9aa0a6; }
+        .ac-timeline li.is-canceled .ac-timeline-title { color: #c62828; }
+
+        /* ---------- Copy button & Bank card components ---------- */
+        .ac-bank-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+        .ac-bank-item:last-child { margin-bottom: 0; }
+        .ac-bank-name {
+            font-weight: 700;
+            font-size: 13px;
+            color: #1a202c;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .ac-bank-account {
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #0d47a1;
+            margin: 4px 0;
+            word-break: break-all;
+        }
+        .ac-bank-holder { font-size: 12px; color: #718096; }
+        .ac-copy-btn {
+            background: #fff;
+            border: 1px solid #ced4da;
+            color: #495057;
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .15s ease-in-out;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            line-height: 1.4;
+        }
+        .ac-copy-btn:hover, .ac-copy-btn:active {
+            background: #e7f1ff;
+            border-color: #0d47a1;
+            color: #0d47a1;
+        }
+        .ac-copy-btn.copied {
+            background: #e6f4ea !important;
+            border-color: #1e7e34 !important;
+            color: #1e7e34 !important;
+        }
+
+        /* ---------- Instruction Steps & Accordion ---------- */
+        .ac-steps { padding-left: 20px; margin-bottom: 0; }
+        .ac-steps li {
+            font-size: 13px;
+            color: #495057;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        .ac-steps li:last-child { margin-bottom: 0; }
+        .ac-accordion-header {
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f1f3;
+            font-weight: 600;
+            font-size: 13px;
+            color: #212529;
+        }
+        .ac-accordion-header:last-child { border-bottom: 0; }
+        .ac-accordion-header .fa-chevron-down {
+            transition: transform .2s ease;
+            font-size: 11px;
+            color: #8a8f99;
+        }
+        .ac-accordion-header.active .fa-chevron-down {
+            transform: rotate(180deg);
+        }
+        .ac-accordion-body {
+            display: none;
+            padding: 10px 0 14px 0;
+            font-size: 12.5px;
+            color: #495057;
+            line-height: 1.5;
+            border-bottom: 1px solid #f0f1f3;
+        }
+
+        /* ---------- Step Milestones Bar (Tracking) ---------- */
+        .ac-step-milestones {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            padding: 10px 6px;
+            margin-bottom: 16px;
+        }
+        .ac-step-milestones::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            right: 25px;
+            height: 3px;
+            background: #e9ecef;
+            z-index: 1;
+        }
+        .ac-milestone-item {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 25%;
+        }
+        .ac-milestone-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e9ecef;
+            color: #8a8f99;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            border: 2px solid #fff;
+            transition: all .2s;
+        }
+        .ac-milestone-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #8a8f99;
+            margin-top: 6px;
+            line-height: 1.2;
+        }
+        .ac-milestone-item.is-done .ac-milestone-icon { background: #1e7e34; color: #fff; }
+        .ac-milestone-item.is-done .ac-milestone-label { color: #1e7e34; }
+        .ac-milestone-item.is-current .ac-milestone-icon {
+            background: #0d47a1;
+            color: #fff;
+            box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.15);
+        }
+        .ac-milestone-item.is-current .ac-milestone-label { color: #0d47a1; font-weight: 700; }
+        .ac-milestone-item.is-canceled .ac-milestone-icon { background: #c62828; color: #fff; }
+        .ac-milestone-item.is-canceled .ac-milestone-label { color: #c62828; }
 
         /* ---------- Mobile specific tweaks ---------- */
         @media (max-width: 575.98px) {
