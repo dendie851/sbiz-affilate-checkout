@@ -4,15 +4,7 @@
 
 	if(strlen(str_replace('/', '', $globalModul)) < 1) {
 		$globalModul = $config['app']['homepage'];
-	}
-
-	// =================================================================
-	// ROUTING PUBLIK - SBiZ Affiliate Checkout
-	// Format URL : https://server/{username}/{affiliate-product-id}
-	// Contoh     : https://namadomain.com/jokowi/prod-12345
-	// Pembeli TIDAK perlu login. Halaman ini tidak boleh menimpa
-	// route internal (modul/aksi) yang sudah didefinisikan di switch.
-	// =================================================================
+	}=====================================================
 
 	switch ($globalModul) {		
 	case (globalFunctionUri(2) == 'home/dashboard'): 
