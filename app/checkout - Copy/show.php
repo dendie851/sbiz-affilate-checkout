@@ -39,26 +39,9 @@
             <?php endif; ?>
 
             <div class="ac-card">
-                <!-- ==================== GALLERY / FOTO PRODUK ==================== -->
-                <div class="ac-product-gallery">
-                    <!-- Main Active Image -->
-                    <div class="ac-product-image mb-2 text-center" style="background: #f8f9fa; border-radius: 8px; overflow: hidden; padding: 10px;">
-                        <img id="mainProductImg" src="<?php echo $showImages[0]['photo']; ?>" alt="<?php echo $showName ?>" style="max-height: 350px; object-fit: contain; width: 100%;">
-                    </div>
-
-                    <!-- Thumbnails Slider / Scrollable Row -->
-                    <?php if(count($showImages) > 1): ?>
-                        <div class="ac-thumbnail-scroll d-flex gap-2 overflow-auto pb-2" style="white-space: nowrap; scrollbar-width: thin;">
-                            <?php foreach($showImages as $index => $img): ?>
-                                <div class="ac-thumb-item <?php echo $index === 0 ? 'active' : ''; ?>" onclick="changeMainImage('<?php echo $img['photo']; ?>', this)" style="cursor: pointer; flex: 0 0 70px; width: 70px; height: 70px; border: 2px solid <?php echo $index === 0 ? '#007bff' : '#dee2e6'; ?>; border-radius: 6px; overflow: hidden; background: #fff;">
-                                    <img src="<?php echo $img['thumbnail']; ?>" alt="Thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
-                                    <?php echo $img['thumbnail']; ?> 
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
+                <div class="ac-product-image">
+                    <img src="<?php echo $showImage ?>" alt="<?php echo $showName ?>">
                 </div>
-
                 <div class="ac-card-body">
                     <h2 class="ac-product-name"><?php echo $showName ?></h2>
                     <div class="ac-product-sku">
@@ -136,20 +119,8 @@
 
 <?php ob_start(); ?>
 <script type="text/javascript">
-    function changeMainImage(imageUrl, element) {
-        // Ganti sumber gambar utama
-        document.getElementById('mainProductImg').src = imageUrl;
-        
-        // Atur efek aktif border pada thumbnail
-        var thumbnails = document.querySelectorAll('.ac-thumb-item');
-        thumbnails.forEach(function(thumb) {
-            thumb.style.borderColor = '#dee2e6';
-        });
-        element.style.borderColor = '#007bff';
-    }
-
     $(document).ready(function() {
-        // Interaksi tambahan jika diperlukan
+        // Halaman detail produk affiliate tidak memerlukan interaksi khusus.
     });
 </script>
 <?php $embedCssJS = ob_get_contents(); ?>

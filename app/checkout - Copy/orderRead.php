@@ -12,32 +12,23 @@
 	$affiliateUsername = isset($_REQUEST['affiliateUsername']) ? general::secureInput(trim($_REQUEST['affiliateUsername'])) : '';
 	$affiliateProductId = isset($_REQUEST['affiliateProductId']) ? general::secureInput(trim($_REQUEST['affiliateProductId'])) : '';
 
-$query = "select afs.id, afs.affiliate_id, afs.stuff_id, afs.link_product_brosur, afs.price, afs.price_basic,
-                afs.fee_affiliate_nominal, afs.fee_affiliate_percent, afs.point,
-                a.name as affiliate_name, a.username as affiliate_username, a.city as affiliate_city,
-                s.sku, s.name, s.nickname, s.stock, s.price as price_master, s.price_basic as price_basic_master, s.category_id, s.description, s.fee_sales,
-                (select sc.name from stuff_category as sc where sc.id = s.category_id) as category_name,
-                sp.photo, sp.photo_thumail
-              from affiliate_stuff as afs
-              inner join affiliate as a
-                on a.id = afs.affiliate_id
-              inner join stuff as s
-                on s.id = afs.stuff_id
-              left join (
-                  select stuff_id, photo, photo_thumail 
-                  from stuff_photo 
-                  where is_primary = '1' 
-                    and is_active = '1' 
-                    and is_delete = '0'
-              ) as sp 
-                on sp.stuff_id = s.id
-              where a.username = '{$affiliateUsername}'
-                and a.is_delete = '0'
-                and a.is_active = '1'
-                and afs.id = '{$affiliateProductId}'
-                and afs.is_delete = '0'
-                and s.is_delete = '0'
-                and s.is_hidden = '0'";
+	$query = "select afs.id, afs.affiliate_id, afs.stuff_id, afs.link_product_brosur, afs.price, afs.price_basic,
+				afs.fee_affiliate_nominal, afs.fee_affiliate_percent, afs.point,
+				a.name as affiliate_name, a.username as affiliate_username, a.city as affiliate_city,
+				s.sku, s.name, s.nickname, s.stock, s.price as price_master, s.price_basic as price_basic_master, s.category_id, s.description, s.fee_sales,
+				(select sc.name from stuff_category as sc where sc.id = s.category_id) as category_name
+			  from affiliate_stuff as afs
+			  inner join affiliate as a
+			   on a.id = afs.affiliate_id
+			  inner join stuff as s
+			   on s.id = afs.stuff_id
+			  where a.username = '{$affiliateUsername}'
+			    and a.is_delete = '0'
+			    and a.is_active = '1'
+			    and afs.id = '{$affiliateProductId}'
+			    and afs.is_delete = '0'
+			    and s.is_delete = '0'
+			    and s.is_hidden = '0'";
 
 	$tmp = $globalConDBMySQL->query($query) or die (mysqli_error($globalConDBMySQL));
 	$dataProduct = $tmp->fetch_array();
@@ -69,13 +60,8 @@ $query = "select afs.id, afs.affiliate_id, afs.stuff_id, afs.link_product_brosur
 	$orderPriceBasicMaster    = $hasProduct ? (double)$dataProduct['price_basic_master'] : 0;
 	$orderPriceBasic          = $orderPriceBasicAffiliate > 0 ? $orderPriceBasicAffiliate : $orderPriceBasicMaster;
 
+	$orderImage = $config['app']['assets'].'img/no-photo.png';
 
-	if (strlen($dataProduct['photo_thumail'])> 0) {
-		$orderImage =  $config['app']['assets'].$dataProduct['photo_thumail'];
-	} else {
-		$orderImage = $config['app']['assets'].'img/no-photo.png';
-	}
-	
 	// ---------------------------------------------------------------
 	// Jasa pengiriman : DISEMBUNYIKAN dulu (disimpan default 0)
 	// Daftar expedisi tidak ditampilkan pada form order.

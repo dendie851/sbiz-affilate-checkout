@@ -49,20 +49,11 @@
 
 			// Ambil detail item pesanan
 			$queryItems = "select sod.id, sod.name, sod.nickname, sod.amount, sod.price,
-                                  sod.stuff_id, sp.photo, sp.photo_thumail
-                           from sales_order_detail as sod
-                           left join stuff as s
-                             on s.id = sod.stuff_id
-                           left join (
-                               select stuff_id, photo, photo_thumail 
-                               from stuff_photo 
-                               where is_primary = '1' 
-                                 and is_active = '1' 
-                                 and is_delete = '0'
-                           ) as sp 
-                             on sp.stuff_id = sod.stuff_id
-                           where sod.sales_order_id = '{$salesOrderId}'";
-						   
+							sod.stuff_id
+						   from sales_order_detail as sod
+						   left join stuff as s
+						     on s.id = sod.stuff_id
+						   where sod.sales_order_id = '{$salesOrderId}'";
 			$tmpItems = $globalConDBMySQL->query($queryItems) or die (mysqli_error($globalConDBMySQL));
 			while($item = $tmpItems->fetch_assoc()) {
 				$dataItems[] = $item;
@@ -159,6 +150,4 @@
 
 
 	$urlTracking = $globalUrl . 'checkout/tracking?noOrder=' . (isset($dataOrder['no_order']) ? $dataOrder['no_order'] : '');
-
- 
 ?>

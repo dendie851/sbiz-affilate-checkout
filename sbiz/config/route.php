@@ -2,9 +2,6 @@
 	$globalModul = globalFunctionUri(2);	
 	$globalModul = str_replace(explode('/',$config['app']['path']), '', $globalModul);
 
-	if(strlen(str_replace('/', '', $globalModul)) < 1) {
-		$globalModul = $config['app']['homepage'];
-	}=====================================================
 
 	switch ($globalModul) {		
 	case (globalFunctionUri(2) == 'home/dashboard'): 
